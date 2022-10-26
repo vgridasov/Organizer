@@ -1,0 +1,59 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}
+: Главная страница
+{% endblock %}
+
+
+{% block content %}
+
+<article class="card-group-item col-md-8">
+{% if user.is_authenticated %}
+    <header class="card-header">
+        <h6 class="title">
+            Задачи пользователя: {{ user.profile.fio }}
+        </h6>
+    </header>
+
+    <div class="card">
+        <div class="card-body">
+            <h3>Задачи</h3>
+            <ul>
+            {% for tsk in tasks %}
+                <li>
+                    {{ tsk.time_create }}:
+                    <a href="{{ tsk.get_absolute_url }}"> {{ tsk.task_name }}</a>
+                </li>
+            {% empty %}
+                <li>Похоже, список пуст.</li>
+            {% endfor %}
+            </ul>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; начало</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">пред.</a>
+                    {% endif %}
+
+
+                    {% if page_obj.has_next %}
+                    <span class="current">
+                        Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% endif %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">след.</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">конец &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</article>
+
+{% else %}
+<p>Содержимое главной страницы</p>
+{% endif %}
+
+{% endblock %}

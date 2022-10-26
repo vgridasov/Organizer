@@ -1,0 +1,10 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}
+: Задача № {{ task.id }}
+{% endblock %}
+
+{% block content %}
+<h6>{{ task.task_name }}</h6>
+{{ task.task_description }}<br>
+{% endblock %}
